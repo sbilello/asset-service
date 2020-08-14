@@ -1,0 +1,9 @@
+FROM cassandra:3.11.7
+
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.7.3/wait /wait
+RUN chmod +x /wait
+
+ADD ./src/test/resources/cassandra_schema.cql /schema.cql
+
+## Wait for cassandra and then load the schema
+CMD /wait && /bin/bash -c "echo loading cassandra keyspace && cqlsh cassandra -f /schema.cql"

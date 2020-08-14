@@ -1,0 +1,50 @@
+# Such configuration is not used but it should be modified
+# Ideally, we would run this app inside an instance with an IAM role associated
+# to avoid to store any credentials, or it would rely on Spring Vault to
+# get the credentials from a secret service
+cloud:
+  aws:
+    region.static: us-east-1
+    credentials:
+      accessKey: "xxxxxxx"
+      secretKey: "xxxxxxx"
+      instance-profile: false
+      use-default-aws-credentials-chain: false
+    stack:
+      auto: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+localstack:
+  url: http://localhost:4572
+  region: us-east-1
+
+s3:
+  bucket-name: demo-bucket
+
+spring:
+  data:
+    cassandra:
+      keyspace-name: s3_proxy
+      port: 9042
+      request:
+        consistency: local_one
+      local-datacenter: datacenter1
+  server:
+    servlet:
+      context-path: /
+    compression:
+      enabled: true
+      mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+      min-response-size: 1024
+      chain:
+        html-application-cache: true
+        enabled: true
+        strategy:
+          content:
+            enabled: true
+            paths: /webjars/swagger-ui/**.*

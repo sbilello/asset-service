@@ -1,0 +1,9 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  data:
+    cassandra:
+      contact-points: 127.0.0.1
+      keyspace-name: s3_proxy
+      port: 9142
+      schema-action: create_if_not_exists
